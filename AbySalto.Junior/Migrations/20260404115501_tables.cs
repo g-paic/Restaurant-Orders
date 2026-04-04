@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AbySalto.Junior.Migrations
 {
     /// <inheritdoc />
-    public partial class addTables : Migration
+    public partial class tables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,14 +18,14 @@ namespace AbySalto.Junior.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Customer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PaymentMethod = table.Column<int>(type: "int", nullable: false),
+                    PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DeliveryAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Remark = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalPrice = table.Column<double>(type: "float", nullable: false),
-                    Currency = table.Column<int>(type: "int", nullable: false)
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,6 +53,11 @@ namespace AbySalto.Junior.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Orders",
+                columns: new[] { "Id", "ContactNumber", "Currency", "Customer", "DeliveryAddress", "OrderTime", "PaymentMethod", "Remark", "Status", "TotalPrice" },
+                values: new object[] { 1, "+385 98 123 4567", "EUR", "Pero Perić", "Radnička 101, Zagreb", new DateTime(2026, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "Kartica", "/", "Završena", 0.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",

@@ -1,0 +1,54 @@
+﻿@model List<Order>
+
+@{
+    ViewData["Title"] = "Narudžbe";
+}
+
+<div class="container">
+    <h1 class="display-4">Narudžbe</h1>
+
+    <div class="row pb-3">
+        <div class="col-6"></div>
+        <div class="col-6 text-end">
+            <a asp-controller="Restaurant" asp-action="CreateOrder" class="btn btn-primary">
+                Nova narudžba
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped" style="text-align: center">
+        <thead>
+            <tr>
+                <th>Kupac</th>
+                <th>Status</th>
+                <th>Vrijeme narudžbe</th>
+                <th>Način plaćanja</th>
+                <th>Adresa dostave</th>
+                <th>Kontakt broj</th>
+                <th>Napomena</th>
+                <th>Iznos</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.Customer</td>
+                    <td>@item.Status</td>
+                    <td>@item.OrderTime</td>
+                    <td>@item.PaymentMethod</td>
+                    <td>@item.DeliveryAddress</td>
+                    <td>@item.ContactNumber</td>
+                    <td>@item.Remark</td>
+                    <td>@item.TotalPrice @item.Currency</td>
+                    <td>Artikli</td>
+                    <td>Uredi</td>
+                    <td>Izbriši</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

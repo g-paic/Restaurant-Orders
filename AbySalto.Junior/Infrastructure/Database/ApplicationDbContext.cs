@@ -13,7 +13,22 @@ namespace AbySalto.Junior.Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
+            modelBuilder.Entity<Order>().HasData(
+                new Order
+                {
+                    Id = 1,
+                    Customer = "Pero Perić",
+                    Status = "Završena",
+                    OrderTime = new DateTime(2026, 4, 3),
+                    PaymentMethod = "Kartica",
+                    DeliveryAddress = "Radnička 101, Zagreb",
+                    ContactNumber = "+385 98 123 4567",
+                    Remark = "/",
+                    Currency = "EUR"
+                }
+            );
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
         

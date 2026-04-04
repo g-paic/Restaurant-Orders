@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AbySalto.Junior.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260402203844_addTables")]
-    partial class addTables
+    [Migration("20260404115501_tables")]
+    partial class tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,8 +37,9 @@ namespace AbySalto.Junior.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Currency")
-                        .HasColumnType("int");
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Customer")
                         .IsRequired()
@@ -51,15 +52,17 @@ namespace AbySalto.Junior.Migrations
                     b.Property<DateTime>("OrderTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentMethod")
-                        .HasColumnType("int");
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remark")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
@@ -67,6 +70,21 @@ namespace AbySalto.Junior.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ContactNumber = "+385 98 123 4567",
+                            Currency = "EUR",
+                            Customer = "Pero Perić",
+                            DeliveryAddress = "Radnička 101, Zagreb",
+                            OrderTime = new DateTime(2026, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "Kartica",
+                            Remark = "/",
+                            Status = "Završena",
+                            TotalPrice = 0.0
+                        });
                 });
 
             modelBuilder.Entity("AbySalto.Junior.Models.OrderItem", b =>

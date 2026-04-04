@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 namespace AbySalto.Junior.Models
@@ -11,14 +13,11 @@ namespace AbySalto.Junior.Models
         [Required]
         public string Customer { get; set; }
 
-        [Required]
-        public OrderStatus Status { get; set; }
+        public string Status { get; set; }
 
-        [Required]
         public DateTime OrderTime { get; set; }
 
-        [Required]
-        public OrderPaymentMethod PaymentMethod { get; set; }
+        public string PaymentMethod { get; set; }
 
         [Required]
         public string DeliveryAddress { get; set; }
@@ -26,9 +25,14 @@ namespace AbySalto.Junior.Models
         [Required]
         public string ContactNumber { get; set; }
 
+        [ValidateNever]
         public string Remark { get; set; }
+
+        [ValidateNever]
         public List<OrderItem> Items { get; set; }
+
         public double TotalPrice { get; set; }
-        public Currency Currency { get; set; }
+
+        public string Currency { get; set; }
     }
 }
