@@ -10,7 +10,7 @@
     <div class="row pb-3">
         <div class="col-6"></div>
         <div class="col-6 text-end">
-            <a asp-controller="Restaurant" asp-action="CreateOrder" class="btn btn-primary">
+            <a asp-controller="Restaurant" asp-action="CreateOrUpdateOrder" class="btn btn-primary">
                 Nova narudžba
             </a>
         </div>
@@ -45,8 +45,14 @@
                     <td>@item.Remark</td>
                     <td>@item.TotalPrice @item.Currency</td>
                     <td>Artikli</td>
-                    <td>Uredi</td>
-                    <td>Izbriši</td>
+
+                    <td>
+                        <a asp-controller="Restaurant" asp-action="CreateOrUpdateOrder" asp-route-id="@item.Id" class="btn btn-warning">Uredi</a>
+                    </td>
+
+                    <td>
+                        <a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Izbriši</a>
+                    </td>
                 </tr>
             }
         </tbody>

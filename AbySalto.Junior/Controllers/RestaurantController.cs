@@ -3,6 +3,7 @@ using AbySalto.Junior.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace AbySalto.Junior.Controllers
 {
@@ -41,19 +42,31 @@ namespace AbySalto.Junior.Controllers
             return View(orders);
         }
 
-        public IActionResult CreateOrder()
+        public IActionResult CreateOrUpdateOrder(int? id)
         {
             ViewBag.StatusList = statuses;
             ViewBag.PaymentMethodList = paymentMethods;
             ViewBag.CurrencyList = currencies;
 
-            return View();
+            if (id == null || id == 0)
+            {
+                return View();
+            }
+            
+            Order order = _context.Orders.Find(id);
+            
+            if (order == null)
+            {
+                return View();
+            }
+
+            return View(order);
         }
 
         [HttpPost]
-        public IActionResult CreateOrder(Order order)
+        public IActionResult CreateOrUpdateOrder(Order order)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (order.Remark == null)
                 {
@@ -62,8 +75,17 @@ namespace AbySalto.Junior.Controllers
 
                 order.OrderTime = DateTime.Now;
 
-                _context.Add(order);
+                if (order.Id == 0)
+                {
+                    _context.Orders.Add(order);
+                }
+                else
+                {
+                    _context.Orders.Update(order);
+                }
+
                 _context.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -72,6 +94,26 @@ namespace AbySalto.Junior.Controllers
             ViewBag.CurrencyList = currencies;
 
             return View();
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            Order order = _context.Orders.Find(id);
+
+            if (order == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            _context.Orders.Remove(order);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
