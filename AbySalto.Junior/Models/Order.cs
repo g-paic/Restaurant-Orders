@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
 
 namespace AbySalto.Junior.Models
 {
@@ -10,19 +8,21 @@ namespace AbySalto.Junior.Models
         [Key]
         public int Id { get; set; }
         
-        [Required]
+        [Required(ErrorMessage = "Upišite ime kupca")]
         public string Customer { get; set; }
 
+        [Required(ErrorMessage = "Odaberite status")]
         public string Status { get; set; }
 
         public DateTime OrderTime { get; set; }
 
+        [Required(ErrorMessage = "Odaberite metodu plaćanja")]
         public string PaymentMethod { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Upišite adresu dostave")]
         public string DeliveryAddress { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Upišite kontakt broj")]
         public string ContactNumber { get; set; }
 
         [ValidateNever]
@@ -32,6 +32,9 @@ namespace AbySalto.Junior.Models
 
         public double TotalPrice { get; set; }
 
+        public double BasePrice { get; set; }
+
+        [Required(ErrorMessage = "Odaberite valutu")]
         public string Currency { get; set; }
     }
 }

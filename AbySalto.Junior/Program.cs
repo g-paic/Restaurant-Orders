@@ -1,7 +1,7 @@
 
 using AbySalto.Junior.Infrastructure.Database;
+using AbySalto.Junior.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 
 namespace AbySalto.Junior
 {
@@ -16,9 +16,11 @@ namespace AbySalto.Junior
             builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddScoped<ICalculationService, CalculationService>();
+
             var app = builder.Build();
 
-            if(!app.Environment.IsDevelopment())
+            if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Restaurant/Error");
                 app.UseHsts();

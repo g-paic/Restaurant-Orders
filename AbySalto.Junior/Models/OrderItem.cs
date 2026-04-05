@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,13 +9,13 @@ namespace AbySalto.Junior.Models
         [Key]
         public int OrderItemId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Upišite naziv artikla")]
         public string Name { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(0, int.MaxValue, ErrorMessage = "Količina ne može biti negativna")]
         public int Quantity { get; set; }
 
-        [Range(0, Double.MaxValue)]
+        [Range(0, Double.MaxValue, ErrorMessage = "Cijena ne može biti negativna")]
         public double Price { get; set; }
 
         public int OrderId { get; set; }

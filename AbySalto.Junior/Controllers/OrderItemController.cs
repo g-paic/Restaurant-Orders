@@ -1,26 +1,28 @@
 ﻿using AbySalto.Junior.Infrastructure.Database;
 using AbySalto.Junior.Models;
+using AbySalto.Junior.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AbySalto.Junior.Controllers
 {
     public class OrderItemController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICalculationService _calculationService;
 
-        public OrderItemController(ApplicationDbContext context)
+        public OrderItemController(ApplicationDbContext context, ICalculationService calculationService)
         {
             _context = context;
+            _calculationService = calculationService;
         }
         
         public IActionResult Items(int? id)
         {
             List<OrderItem> items = _context.OrderItems.Where(item => item.OrderId == id).ToList();
-
-            // Order order = _context.Orders.Find(id);
+            Order order = _context.Orders.Find(id);
 
             ViewBag.OrderId = id;
+            ViewBag.Currency = order.Currency;
 
             return View(items);
         }
@@ -49,9 +51,16 @@ namespace AbySalto.Junior.Controllers
         {
             if (ModelState.IsValid)
             {
+                double price = Math.Round(item.Price, 2);
+                item.Price = price;
+
                 Order order = _context.Orders.Find(item.OrderId);
+
                 order.Items.Add(item);
                 _context.SaveChanges();
+
+                _calculationService.CalculateOrderTotalPrice(item.OrderId);
+                _calculationService.CalculateBasePrice(item.OrderId);
 
                 return RedirectToAction("Items", new { id = item.OrderId });
             }
@@ -86,8 +95,14 @@ namespace AbySalto.Junior.Controllers
         {
             if (ModelState.IsValid)
             {
+                double price = Math.Round(item.Price, 2);
+                item.Price = price;
+
                 _context.OrderItems.Update(item);
                 _context.SaveChanges();
+
+                _calculationService.CalculateOrderTotalPrice(item.OrderId);
+                _calculationService.CalculateBasePrice(item.OrderId);
 
                 return RedirectToAction("Items", new { id = item.OrderId });
             }
@@ -116,6 +131,9 @@ namespace AbySalto.Junior.Controllers
 
             _context.OrderItems.Remove(orderItem);
             _context.SaveChanges();
+
+            _calculationService.CalculateOrderTotalPrice(orderId);
+            _calculationService.CalculateBasePrice(orderId);
 
             return RedirectToAction("Items", new { id = orderId });
         }

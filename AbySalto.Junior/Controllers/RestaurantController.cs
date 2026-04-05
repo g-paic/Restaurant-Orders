@@ -1,9 +1,8 @@
 ﻿using AbySalto.Junior.Infrastructure.Database;
 using AbySalto.Junior.Models;
+using AbySalto.Junior.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Diagnostics;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace AbySalto.Junior.Controllers
 {
@@ -30,16 +29,29 @@ namespace AbySalto.Junior.Controllers
             };
 
         private readonly ApplicationDbContext _context;
+        private readonly ICalculationService _calculationService;
 
-        public RestaurantController(ApplicationDbContext context)
+        public RestaurantController(ApplicationDbContext context, ICalculationService calculationService)
         {
             _context = context;
+            _calculationService = calculationService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(bool? sorted)
         {
             List<Order> orders = _context.Orders.ToList();
+
+            if (sorted == true)
+            {
+                orders = orders.OrderByDescending(order => order.BasePrice).ToList();
+            }
+
             return View(orders);
+        }
+
+        public IActionResult SortByTotalPrice()
+        {
+            return RedirectToAction("Index", new { sorted = true });
         }
 
         public IActionResult CreateOrUpdateOrder(int? id)
@@ -74,7 +86,7 @@ namespace AbySalto.Junior.Controllers
                 }
 
                 order.OrderTime = DateTime.Now;
-
+                
                 if (order.Id == 0)
                 {
                     _context.Orders.Add(order);
@@ -85,6 +97,9 @@ namespace AbySalto.Junior.Controllers
                 }
 
                 _context.SaveChanges();
+
+                _calculationService.CalculateOrderTotalPrice(order.Id);
+                _calculationService.CalculateBasePrice(order.Id);
 
                 return RedirectToAction("Index");
             }

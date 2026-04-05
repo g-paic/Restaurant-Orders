@@ -10,9 +10,8 @@
     <div class="row pb-3">
         <div class="col-6"></div>
         <div class="col-6 text-end">
-            <a asp-controller="OrderItem" asp-action="Create" asp-route-id="@ViewBag.OrderId" class="btn btn-primary">
-                Novi artikal
-            </a>
+            <a asp-controller="OrderItem" asp-action="Create" asp-route-id="@ViewBag.OrderId" class="btn btn-primary">Novi artikal</a>
+            <a asp-controller="Restaurant" asp-action="Index" class="btn btn-secondary">Natrag</a>
         </div>
     </div>
 
@@ -21,7 +20,7 @@
             <tr>
                 <th>Naziv</th>
                 <th>Količina</th>
-                <th>Cijena</th>
+                <th>Cijena (@ViewBag.Currency)</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -46,8 +45,4 @@
             }
         </tbody>
     </table>
-
-    <div class="col-6 col-md-3">
-        <a asp-controller="Restaurant" asp-action="Index" class="btn btn-primary border form-control">Natrag</a>
-    </div>
 </div>
