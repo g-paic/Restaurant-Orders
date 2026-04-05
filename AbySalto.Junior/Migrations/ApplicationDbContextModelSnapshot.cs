@@ -86,11 +86,11 @@ namespace AbySalto.Junior.Migrations
 
             modelBuilder.Entity("AbySalto.Junior.Models.OrderItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderItemId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -105,7 +105,7 @@ namespace AbySalto.Junior.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderItemId");
 
                     b.HasIndex("OrderId");
 

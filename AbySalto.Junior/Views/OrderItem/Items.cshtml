@@ -1,0 +1,53 @@
+﻿@model List<OrderItem>
+
+@{
+    ViewData["Title"] = "Artikli";
+}
+
+<div class="container">
+    <h1 class="display-4">Narudžba broj @ViewBag.OrderId - artikli</h1>
+
+    <div class="row pb-3">
+        <div class="col-6"></div>
+        <div class="col-6 text-end">
+            <a asp-controller="OrderItem" asp-action="Create" asp-route-id="@ViewBag.OrderId" class="btn btn-primary">
+                Novi artikal
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped" style="text-align: center">
+        <thead>
+            <tr>
+                <th>Naziv</th>
+                <th>Količina</th>
+                <th>Cijena</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price</td>
+
+                    <td>
+                        <a asp-controller="OrderItem" asp-action="Update" asp-route-id="@item.OrderItemId" class="btn btn-warning">Uredi</a>
+                    </td>
+
+                    <td>
+                        <a asp-controller="OrderItem" asp-action="Delete" asp-route-id="@item.OrderItemId" class="btn btn-danger">Izbriši</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="col-6 col-md-3">
+        <a asp-controller="Restaurant" asp-action="Index" class="btn btn-primary border form-control">Natrag</a>
+    </div>
+</div>

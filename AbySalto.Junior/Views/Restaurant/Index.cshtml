@@ -33,25 +33,28 @@
         </thead>
         
         <tbody>
-            @foreach(var item in Model)
+            @foreach(var order in Model)
             {
                 <tr>
-                    <td>@item.Customer</td>
-                    <td>@item.Status</td>
-                    <td>@item.OrderTime</td>
-                    <td>@item.PaymentMethod</td>
-                    <td>@item.DeliveryAddress</td>
-                    <td>@item.ContactNumber</td>
-                    <td>@item.Remark</td>
-                    <td>@item.TotalPrice @item.Currency</td>
-                    <td>Artikli</td>
-
+                    <td>@order.Customer</td>
+                    <td>@order.Status</td>
+                    <td>@order.OrderTime</td>
+                    <td>@order.PaymentMethod</td>
+                    <td>@order.DeliveryAddress</td>
+                    <td>@order.ContactNumber</td>
+                    <td>@order.Remark</td>
+                    <td>@order.TotalPrice @order.Currency</td>
+                    
                     <td>
-                        <a asp-controller="Restaurant" asp-action="CreateOrUpdateOrder" asp-route-id="@item.Id" class="btn btn-warning">Uredi</a>
+                        <a asp-controller="OrderItem" asp-action="Items" asp-route-id="@order.Id" class="btn btn-info">Artikli</a>
                     </td>
 
                     <td>
-                        <a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Izbriši</a>
+                        <a asp-controller="Restaurant" asp-action="CreateOrUpdateOrder" asp-route-id="@order.Id" class="btn btn-warning">Uredi</a>
+                    </td>
+
+                    <td>
+                        <a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@order.Id" class="btn btn-danger">Izbriši</a>
                     </td>
                 </tr>
             }

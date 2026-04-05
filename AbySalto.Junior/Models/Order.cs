@@ -28,8 +28,7 @@ namespace AbySalto.Junior.Models
         [ValidateNever]
         public string Remark { get; set; }
 
-        [ValidateNever]
-        public List<OrderItem> Items { get; set; }
+        public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
         public double TotalPrice { get; set; }
 
