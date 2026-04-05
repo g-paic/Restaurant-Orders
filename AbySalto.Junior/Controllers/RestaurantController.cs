@@ -1,33 +1,13 @@
 ﻿using AbySalto.Junior.Infrastructure.Database;
 using AbySalto.Junior.Models;
 using AbySalto.Junior.Services;
+using AbySalto.Junior.StaticData;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AbySalto.Junior.Controllers
 {
     public class RestaurantController : Controller
     {
-        List<SelectListItem> statuses = new List<SelectListItem> {
-                new SelectListItem { Value = "Na čekanju", Text = "Na čekanju" },
-                new SelectListItem { Value = "U pripremi", Text = "U pripremi" },
-                new SelectListItem { Value = "Završena", Text = "Završena" }
-            };
-
-        List<SelectListItem> paymentMethods = new List<SelectListItem> {
-                new SelectListItem { Value = "Gotovina", Text = "Gotovina" },
-                new SelectListItem { Value = "Kartica", Text = "Kartica" }
-            };
-
-        List<SelectListItem> currencies = new List<SelectListItem> {
-                new SelectListItem { Value = "EUR", Text = "EUR (Euro)" },
-                new SelectListItem { Value = "USD", Text = "USD (Američki dolar)" },
-                new SelectListItem { Value = "CHF", Text = "CHF (Švicarski franak)" },
-                new SelectListItem { Value = "GBP", Text = "GBP (Britanska funta)" },
-                new SelectListItem { Value = "CAD", Text = "CAD (Kanadski dolar)" },
-                new SelectListItem { Value = "AUD", Text = "AUD (Australski dolar)" }
-            };
-
         private readonly ApplicationDbContext _context;
         private readonly ICalculationService _calculationService;
 
@@ -56,9 +36,9 @@ namespace AbySalto.Junior.Controllers
 
         public IActionResult CreateOrUpdateOrder(int? id)
         {
-            ViewBag.StatusList = statuses;
-            ViewBag.PaymentMethodList = paymentMethods;
-            ViewBag.CurrencyList = currencies;
+            ViewBag.StatusList = SelectItemData.statuses;
+            ViewBag.PaymentMethodList = SelectItemData.paymentMethods;
+            ViewBag.CurrencyList = SelectItemData.currencies;
 
             if (id == null || id == 0)
             {
@@ -104,9 +84,9 @@ namespace AbySalto.Junior.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.StatusList = statuses;
-            ViewBag.PaymentMethodList = paymentMethods;
-            ViewBag.CurrencyList = currencies;
+            ViewBag.StatusList = SelectItemData.statuses;
+            ViewBag.PaymentMethodList = SelectItemData.paymentMethods;
+            ViewBag.CurrencyList = SelectItemData.currencies;
 
             return View();
         }
