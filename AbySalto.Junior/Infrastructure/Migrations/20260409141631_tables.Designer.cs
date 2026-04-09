@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AbySalto.Junior.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260405192319_tables")]
+    [Migration("20260409141631_tables")]
     partial class tables
     {
         /// <inheritdoc />

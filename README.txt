@@ -9,5 +9,6 @@ i update-database za ažuriranje baze podataka.
 Nakon toga se aplikacija pokrene unutar okoline Microsoft Visual Studio i u web pregledniku se otvori stranica https://localhost:7056.
 
 Drugi način za pokrenuti aplikaciju je da se u naredbenom retku pozicioniramo u mapi AbySalto.Junior.
-Nakon toga pokrenemo naredbu dotnet run i u web pregledniku otvorimo stranicu http://localhost:5074.
-Prije pokretanja aplikacije, u naredbenom retku je također prvo potrebno dodati migracije i ažurirati bazu podataka.
+Nakon toga pokrenemo naredbu "dotnet run" i u web pregledniku otvorimo stranicu http://localhost:5074.
+Prije pokretanja aplikacije, u naredbenom retku je također prvo potrebno dodati migraciju i ažurirati bazu podataka
+kroz naredbe "dotnet tool install --global dotnet-ef", "dotnet ef migrations add NameOfYourMigration" i "dotnet ef database update".
